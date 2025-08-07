@@ -1,0 +1,58 @@
+{
+  "name": "@service/products",
+  "version": "1.0.0",
+  "author": "Bogdan Petcu",
+  "description": "",
+  "main": "dist/app.js",
+  "type": "module",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "rm -rf ./dist && rollup -c ",
+    "dev": "nodemon --ext ts --exec tsx src/app.ts | pino-pretty --colorize",
+    "generate": "prisma generate --schema='../../database/prisma/schema.prisma' && rm -rf ./database && mkdir -p ./database && cp -r ../../database/generated/* ./database",
+    "migrate": "cross-env $(cat ./../../.env | xargs) prisma migrate dev --schema='../../database/prisma/schema.prisma'",
+    "deploy": "npx prisma migrate deploy --schema='./prisma/schema.prisma'"
+  },
+  "files": [
+    "dist",
+    "package.json",
+    "node_modules"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/autoload": "^6.3.1",
+    "@fastify/awilix": "^8.0.0",
+    "@fastify/env": "^5.0.2",
+    "@fastify/jwt": "^9.1.0",
+    "@fastify/rate-limit": "^10.3.0",
+    "@fastify/redis": "^7.0.2",
+    "@fastify/swagger": "^9.5.1",
+    "@fastify/swagger-ui": "^5.2.3",
+    "@prisma/client": "^6.13.0",
+    "awilix": "^12.0.5",
+    "bullmq": "^5.56.9",
+    "fastify": "^5.4.0",
+    "fastify-plugin": "^5.0.1",
+    "luxon": "^3.7.1",
+    "pino": "^9.7.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.4",
+    "@types/luxon": "^3.7.1",
+    "@types/node": "^24.2.0",
+    "fastify-tsconfig": "^3.0.0",
+    "glob": "^11.0.3",
+    "nodemon": "^3.1.10",
+    "pino-pretty": "13.1.1",
+    "prisma": "^6.13.0",
+    "resolve-tspaths": "0.8.23",
+    "rollup": "^4.46.2",
+    "tsx": "^4.20.3",
+    "typescript": "~5.9.2"
+  }
+}

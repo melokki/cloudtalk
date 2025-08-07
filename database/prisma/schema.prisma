@@ -1,0 +1,55 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x", "linux-musl"]
+  moduleFormat  = "esm"
+  output        = "../generated"
+}
+
+model Product {
+  id          String   @id @default(uuid(7)) @db.Uuid
+  name        String   @map("name")
+  description String   @map("description")
+  price       Int      @map("price")
+  reviews     Review[]
+
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime        @updatedAt @map("updated_at")
+  productRating ProductRating[]
+
+  @@map("products")
+}
+
+model Review {
+  id         String @id @default(uuid(7)) @db.Uuid
+  productId  String @map("product_id") @db.Uuid
+  firstName  String @map("first_name")
+  lastName   String @map("last_name")
+  reviewText String @map("review_text")
+  rating     Int    @map("rating")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  product   Product  @relation(fields: [productId], references: [id])
+
+  @@index([productId])
+  @@map("reviews")
+}
+
+model ProductRating {
+  id            String  @id @default(uuid(7)) @db.Uuid
+  productId     String  @map("product_id") @db.Uuid
+  averageRating Decimal @map("average_rating") @db.Decimal(3, 2)
+  reviewCount   Int     @map("review_count")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  product Product @relation(fields: [productId], references: [id])
+
+  @@index([productId])
+  @@map("product_ratings")
+}

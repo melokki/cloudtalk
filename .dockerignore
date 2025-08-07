@@ -1,0 +1,13 @@
+.git
+.gitignore
+node_modules
+.env
+.env.example
+services/**/database/
+database/generated/
+dist/
+deploy/
+node_modules/
+docs
+**/*.md
+cloudtalk/

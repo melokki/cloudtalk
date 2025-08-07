@@ -1,0 +1,77 @@
+services:
+  db:
+    image: "postgres:17-alpine"
+    env_file:
+      - ".env"
+    ports:
+      - "54320:5432"
+    volumes:
+      - ./cloudtalk/db:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  redis:
+    image: "redis:8-alpine"
+    ports:
+      - "6379:6379"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - ./cloudtalk/redis:/data
+    networks:
+      - internal
+
+  products:
+    build:
+      context: .
+      args:
+        PACKAGE_NAME: products
+      target: runner
+    env_file:
+      - ".env"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
+    networks:
+      - internal
+      - external
+
+  migrator:
+    build:
+      context: .
+      args:
+        PACKAGE_NAME: products
+      target: migrate
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    depends_on:
+      - db
+    networks:
+      - internal
+
+  review-processing:
+    build:
+      context: .
+      args:
+        PACKAGE_NAME: review-processing
+      target: runner
+    env_file:
+      - ".env"
+    expose:
+      - 3001
+    deploy:
+      replicas: 2
+    scale: 2
+    depends_on:
+      - products
+      - redis
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
+  external:
+    driver: bridge

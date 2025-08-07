@@ -1,0 +1,46 @@
+{
+  "name": "@service/review-processing",
+  "version": "1.0.0",
+  "author": "Bogdan Petcu",
+  "description": "",
+  "main": "dist/app.js",
+  "type": "module",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "rm -rf ./dist && rollup -c",
+    "dev": "nodemon --ext ts --exec tsx src/index.ts | pino-pretty --colorize",
+    "generate": "prisma generate --schema='../../database/prisma/schema.prisma' && rm -rf ./database && mkdir -p ./database && cp -r ../../database/generated/* ./database"
+  },
+  "files": [
+    "dist",
+    "package.json",
+    "node_modules"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.13.0",
+    "bullmq": "^5.56.9",
+    "ioredis": "^5.7.0",
+    "luxon": "^3.6.1",
+    "pino": "^9.7.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.4",
+    "@types/luxon": "^3.6.2",
+    "@types/node": "^24.0.3",
+    "esbuild": "^0.25.5",
+    "nodemon": "^3.1.10",
+    "glob": "^11.0.3",
+    "pino-pretty": "13.1.1",
+    "prisma": "^6.13.0",
+    "resolve-tspaths": "0.8.23",
+    "rollup": "^4.46.2",
+    "tsx": "^4.20.3",
+    "typescript": "~5.9.2"
+  }
+}

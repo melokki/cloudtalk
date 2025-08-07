@@ -1,0 +1,22 @@
+{
+  "name": "cloudtalk",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "service/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "dev": "npm run dev --workspaces"
+  },
+  "devDependencies": {
+    "cross-env": "^10.0.0",
+    "prisma": "6.13.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@prisma/client": "6.13.0"
+  }
+}

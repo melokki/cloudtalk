@@ -1,0 +1,7 @@
+.env
+services/**/database/
+database/generated/
+dist/
+deploy/
+node_modules/
+cloudtalk/

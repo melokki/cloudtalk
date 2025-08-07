@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "declarationDir": "./dist",
+    "sourceMap": true,
+    "declaration": true,
+    "strict": true,
+    "module": "NodeNext",
+    "target": "ESNext",
+    "verbatimModuleSyntax": true,
+    "typeRoots": ["node_modules/@types", "types/*.d.ts", "src/**/*.d.ts"],
+    "rootDir": "./",
+    "baseUrl": "./",
+    "paths": {
+      "@utils/*": ["src/utils/*"],
+      "@config/*": ["src/config/*"],
+      "@processors/*": ["src/processors/*"],
+      "@database/*": ["./database/*"]
+    }
+  },
+  "include": ["scripts/**/*", "types/**/*", "src/**/*", "tests/**/*"]
+}
